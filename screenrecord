@@ -19,7 +19,7 @@ print_help()
 
 start_recording()
 {
-	ffmpeg -video_size "$RESOLUTION" -framerate "$FPS" -f x11grab -i :0.0+"$OFFSET" -f pulse -ac 2 -i "$AUDIO_SOURCE".monitor -c:v libx264 -preset ultrafast -qp 17 -vf format=yuv420p "$OUTPUT"
+	ffmpeg -video_size "$RESOLUTION" -framerate "$FPS" -f x11grab -i :0.0+"$OFFSET" -f pulse -ac 2 -i "$AUDIO_SOURCE" -c:v libx264 -preset ultrafast -qp 17 -vf format=yuv420p "$OUTPUT"
 }
 
 # Set default values for optional arguments
