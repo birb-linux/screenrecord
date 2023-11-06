@@ -1,0 +1,16 @@
+#!/bin/bash
+
+print_help()
+{
+	echo "Usage: $0 ./screenrecording.mkv ./transcoded.mp4"
+	echo "Transcodes files from a format to another. Useful for turning .mkv files to .mp4 etc."
+}
+
+# Make sure that all required arguments were specified
+[ -z "$1" ] && print_help
+[ -z "$2" ] && print_help
+
+# Make sure that the source file exists
+[ ! -f "$1" ] && echo "Source file $1 doesn't exist" && exit 1
+
+ffmpeg -i "$1" -vf format=yuv420p "$2"
