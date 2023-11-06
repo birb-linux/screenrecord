@@ -2,7 +2,7 @@
 
 print_help()
 {
-	echo "Usage: $0 ./screenrecording.mkv ./transcoded.mp4"
+	echo "Usage: $(basename "$0") ./screenrecording.mkv ./transcoded.mp4"
 	echo "Transcodes files from a format to another. Useful for turning .mkv files to .mp4 etc."
 }
 
