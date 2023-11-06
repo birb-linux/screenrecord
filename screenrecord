@@ -22,6 +22,9 @@ start_recording()
 	ffmpeg -video_size "$RESOLUTION" -framerate "$FPS" -f x11grab -i :0.0+"$OFFSET" -f pulse -ac 2 -i "$AUDIO_SOURCE" -c:v libx264 -preset ultrafast -qp 17 -vf format=yuv420p "$OUTPUT"
 }
 
+# If there were no args specified, simply print the help page
+[ $# -eq 0 ] && print_help
+
 # Set default values for optional arguments
 OFFSET="0,0"
 AUDIO_SOURCE="$(pactl get-default-sink).monitor"
