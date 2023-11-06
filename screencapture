@@ -3,6 +3,8 @@
 print_help()
 {
 	echo "Usage: $0 [options] [output_file]"
+	echo "Screen records with ffmpeg using the x11grab backend"
+	echo ""
 	echo "Example: $0 -s 1920x1080 -r 60 -o 128,0 -f ./video.mkv"
 	echo ""
 	echo "Required options:"
