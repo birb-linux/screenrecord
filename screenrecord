@@ -14,18 +14,17 @@ print_help()
 	echo ""
 	echo "Option options:"
 	echo "  -o    Recording position offset from the top left corner of the left-most screen"
+	echo "  -a    Audio source (something from 'pactl get-default-sink')"
 }
 
 start_recording()
 {
-	# Get the default pulseaudio sink
-	AUDIO_SOURCE="$(pactl get-default-sink)"
-
-	ffmpeg -video_size "$RESOLUTION" -framerate "$FPS" -f x11grab -i :0.0+"$OFFSET" -f pulse -ac 2 -i "$AUDIO_SOURCE" -c:v libx264 -preset ultrafast -qp 17 -vf format=yuv420p "$OUTPUT"
+	ffmpeg -video_size "$RESOLUTION" -framerate "$FPS" -f x11grab -i :0.0+"$OFFSET" -f pulse -ac 2 -i "$AUDIO_SOURCE".monitor -c:v libx264 -preset ultrafast -qp 17 -vf format=yuv420p "$OUTPUT"
 }
 
 # Set default values for optional arguments
 OFFSET="0,0"
+AUDIO_SOURCE="$(pactl get-default-sink).monitor"
 
 # Handle script arguments
 while test $# -gt 0; do
@@ -45,6 +44,12 @@ while test $# -gt 0; do
 		-o)
 			shift
 			OFFSET="$1"
+			shift
+			;;
+
+		-a)
+			shift
+			AUDIO_SOURCE="$1"
 			shift
 			;;
 
