@@ -1,9 +1,9 @@
 PREFIX=/usr/local
 
 install:
-	cp ./screencapture $(DESTDIR)$(PREFIX)/bin/
-	cp ./screencapture-transcode $(DESTDIR)$(PREFIX)/bin/
+	cp ./screenrecord $(DESTDIR)$(PREFIX)/bin/
+	cp ./screenrecord-transcode $(DESTDIR)$(PREFIX)/bin/
 
 uninstall:
-	rm -f $(DESTDIR)$(PREFIX)/bin/screencapture
-	rm -f $(DESTDIR)$(PREFIX)/bin/screencapture-transcode
+	rm -f $(DESTDIR)$(PREFIX)/bin/screenrecord
+	rm -f $(DESTDIR)$(PREFIX)/bin/screenrecord-transcode

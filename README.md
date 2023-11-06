@@ -1,7 +1,7 @@
-# screencapture
+# screenrecord
 
 ## Installation
-To install screencapture to /usr/local/bin, run the following
+To install screenrecord to /usr/local/bin, run the following
 ```sh
 make install
 ```
