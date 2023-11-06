@@ -1,4 +1,4 @@
-BIN=script
+BIN=screencapture
 PREFIX=/usr/local
 
 install:
