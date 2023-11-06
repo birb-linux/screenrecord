@@ -1,1 +1,67 @@
 #!/bin/bash
+
+print_help()
+{
+	echo "Usage: $0 [options] [output_file]"
+	echo "Example: $0 -s 1920x1080 -r 60 -o 128,0 -f ./video.mkv"
+	echo ""
+	echo "Required options:"
+	echo "  -s    Output resolution"
+	echo "  -r    Output FPS / refreshrate"
+	echo "  -f    Output file path"
+	echo ""
+	echo "Option options:"
+	echo "  -o    Recording position offset from the top left corner of the left-most screen"
+}
+
+start_recording()
+{
+	# Get the default pulseaudio sink
+	AUDIO_SOURCE="$(pactl get-default-sink)"
+
+	ffmpeg -video_size "$RESOLUTION" -framerate "$FPS" -f x11grab -i :0.0+"$OFFSET" -f pulse -ac 2 -i "$AUDIO_SOURCE" -c:v libx264 -preset ultrafast -qp 17 -vf format=yuv420p "$OUTPUT"
+}
+
+# Set default values for optional arguments
+OFFSET="0,0"
+
+# Handle script arguments
+while test $# -gt 0; do
+	case $1 in
+		-s)
+			shift
+			RESOLUTION="$1"
+			shift
+			;;
+
+		-r)
+			shift
+			FPS="$1"
+			shift
+			;;
+
+		-o)
+			shift
+			OFFSET="$1"
+			shift
+			;;
+
+		-f)
+			shift
+			OUTPUT="$1"
+			shift
+			;;
+
+		*)
+			print_help
+			exit 0
+			;;
+	esac
+done
+
+# Check if required args were set
+[ -z "$RESOLUTION" ] && echo "Resolution was not specified" && exit 1
+[ -z "$FPS" ] && echo "FPS was not specified" && exit 1
+[ -z "$OUTPUT" ] && echo "Output path was not specified" && exit 1
+
+start_recording
